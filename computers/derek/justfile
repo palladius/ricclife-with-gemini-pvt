@@ -1,4 +1,11 @@
 
+list:
+    echo Tasks for Derek..
+    just -l
+
 lock-screen:
     loginctl lock-session
+
+lock-find-blockers:
+    bin/find-lock-blockers.sh
 

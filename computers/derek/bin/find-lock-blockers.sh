@@ -27,8 +27,14 @@ echo "🔎 Found $(echo "$INHIBITORS" | wc -l) inhibitors. Checking which ones b
 echo ""
 
 for inhibitor in $INHIBITORS; do
-    # Get flags
-    FLAGS=$(gdbus call --session --dest org.gnome.SessionManager --object-path $inhibitor --method org.gnome.SessionManager.Inhibitor.GetFlags 2>&1 | grep -oP '\d+')
+    # Get flags - extract the number after "uint32 " from "(uint32 X,)" format
+    FLAGS_RAW=$(gdbus call --session --dest org.gnome.SessionManager --object-path $inhibitor --method org.gnome.SessionManager.Inhibitor.GetFlags 2>&1)
+    FLAGS=$(echo "$FLAGS_RAW" | grep -oP 'uint32 \K\d+')
+    
+    # Skip if we couldn't get flags
+    if [ -z "$FLAGS" ]; then
+        continue
+    fi
     
     # Flag 4 = IDLE inhibit, Flag 8 = SUSPEND inhibit, Flag 12 = IDLE+SUSPEND
     # Check if flag includes IDLE (bit 2 set: 4, 5, 6, 7, 12, 13, 14, 15...)

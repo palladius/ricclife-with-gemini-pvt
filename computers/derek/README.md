@@ -41,10 +41,11 @@ This is my primary Linux workstation at Google Zurich, used for:
 - Uses `justfile` for project-specific tasks
 - Work environment (no root access)
 
-## Known Issues & Fixes
+## Known Issues & Investigations
 
-See individual issue documents in this directory:
-- [20260113-screensaver-lock-not-working.md](./20260113-screensaver-lock-not-working.md) - Screen lock security issue
+See `issues/` directory for detailed investigations:
+
+- **[20260113-screen-lock-chrome-inhibitors](./issues/20260113-screen-lock-chrome-inhibitors/)** - Screen lock not working due to Chrome WebRTC/media inhibitors (RESOLVED)
 
 ## Quick Commands
 
