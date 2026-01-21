@@ -1,0 +1,17 @@
+# Readability Tools
+
+# Calculate Gunning Fog Index for a file or URL
+calculate path:
+    #!/usr/bin/env bash
+    if [[ "{{path}}" == http* ]]; then \
+        mkdir -p .cache/$(date +%Y%m%d); \
+        FILE=".cache/$(date +%Y%m%d)/$(echo "{{path}}" | md5sum | cut -d' ' -f1).html"; \
+        curl -s "{{path}}" > "$FILE"; \
+        uv run --with beautifulsoup4 gunning_fog.py "$FILE"; \
+    else \
+        uv run --with beautifulsoup4 gunning_fog.py "{{path}}"; \
+    fi
+
+# List available tools
+list:
+    just -l
